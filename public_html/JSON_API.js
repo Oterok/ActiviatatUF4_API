@@ -4,17 +4,46 @@
  * and open the template in the editor.
  */
 
-$(document).ready(function () {
-    var frequenciaActualitzacio = 3;                           //inicialitzem
-    setInterval(consultaDades, frequenciaActualitzacio * 1000);  //actualitzem dades cada quan toqui....
-    //actualitzaDades();
-})
+//Variables globals
+var parat = false;
+var frequenciaActualitzacio = 3;
+
+//document
+var tempsLabel = document.getElementById("segons");
+
+//esdeveniments
+document.getElementById("modificarTemps").addEventListener("click", modificarTemps);
+document.getElementById("aturar").addEventListener("click", aturarDades);
+document.getElementById("executar").addEventListener("click", executarDades);
+
+window.setInterval(comprobarDades, frequenciaActualitzacio * 1000);
+
+function modificarTemps() {
+    tempsLabel.innerHTML = frequenciaActualitzacio;    
+}
+
+function aturarDades() {
+    if(!parat)
+        parat = true;
+}
+
+function executarDades() {
+    if(parat)
+        parat = false;
+}
+
+//Si la variable parat o permet executem el codi per actualitzar les dades.
+function comprobarDades() {
+    console.log(parat);
+    if(!parat){
+        consultaDades();
+    }
+}
 
 //var dadesRebudes = {};
 var lastUpdateTime = 0;
 
 function consultaDades() {
-    //alert("fede");
     $.ajax({url: 'http://wservice.viabicing.cat/v2/stations?format=json'})//http://wservice.viabicing.cat/v1/getstations.php?v=2?callback=?'})
             .done(function (data) {
                 console.log("ok");

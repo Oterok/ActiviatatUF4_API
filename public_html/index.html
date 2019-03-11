@@ -12,10 +12,19 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="JSON_API.js">
-        </script>
     </head>
     <body>
+        <div id="Informacio">
+            <label>Temps de refresc (segons):</label>
+            <label id="segons">1</label>
+        </div>
+        <div id="botons">
+            <input id='modificarTemps' class="cajaLeft" type="button" value="Modificar temps">
+            <input id='aturar' class="cajaLeft" type="button" value="Aturar refresc de dades">
+            <input id='executar' class="cajaLeft" type="button" value="Continuar refresc de dade">
+        </div>
         <div id="contingut">TODO write content</div>
+        <script type="text/javascript" src="JSON_API.js">
+        </script>
     </body>
 </html>
