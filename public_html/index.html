@@ -17,32 +17,7 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="style.css">
 
-        <script>
-
-        window.onload = function() {
-
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            title: {
-                text: "Estacions Bike i Bike Eletric"
-            },
-            data: [{
-                type: "pie",
-                startAngle: 240,
-                yValueFormatString: "##0.00\"%\"",
-                indexLabel: "{label} {y}",
-                dataPoints: [
-                    {y: 90.25, label: "BIKE"}, // % Bikes normals
-                    {y: 9.75, label: "BIKE-ELECTRIC"}, // % Bike electriques
-                ]
-            }]
-        });
-
-        chart.render();
-
-        }
-                
-        </script>
+        
 
     </head>
     <body>

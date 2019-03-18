@@ -11,6 +11,8 @@ var contingut = document.getElementById("contingut");
 var mapa = document.getElementById("mapid");
 var posBici =  new Array(2);
 var map = L.map('map').setView([41.4, 2.18], 12);
+var bici = 0;
+var biciElectrica = 0;
 
 //document
 var tempsLabel = document.getElementById("segons");
@@ -85,6 +87,13 @@ function actualitzaDadesPantalla(data)
         isNaN(arrayTipus[data.stations[i].type]) ? arrayTipus[data.stations[i].type] = 0 : arrayTipus[data.stations[i].type]++;
         isNaN(arrayBicisPerTipus[data.stations[i].type]) ? arrayBicisPerTipus[data.stations[i].type] = parseInt(data.stations[i].bikes) : arrayBicisPerTipus[data.stations[i].type] += parseInt(data.stations[i].bikes);
         isNaN(arraySlots[data.stations[i].type]) ? arraySlots[data.stations[i].type] = parseInt(data.stations[i].slots) : arraySlots[data.stations[i].type] += parseInt(data.stations[i].slots);
+        if(arrayTipus[data.stations[i].type] == 0){
+            
+            biciElectrica++;
+        }else{
+            bici++;
+        }
+        
     }
     for (tipo in arrayTipus)
     {
@@ -94,11 +103,8 @@ function actualitzaDadesPantalla(data)
     contingut.innerHTML = (linea + "</p>");
 
     actualitzarMapa();
+    char();
 }
-
-
-
-
 
 function actualitzarMapa() {
     
@@ -112,5 +118,30 @@ function actualitzarMapa() {
 //        posBici[i][0] = data.stations[i].longitude;
         var marker = L.marker([posBici[i][0], posBici[i][1]]).addTo(map);
      }
-//    var marker = L.marker([41.386855, 2.176666]).addTo(map);
 }
+
+ function char() {
+        
+        var biciper = bici*100/ (bici+biciElectrica);
+        var bicielper = biciElectrica*100/ (bici+biciElectrica);
+        
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Estacions Bike i Bike Eletric"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 240,
+                yValueFormatString: "##0.00\"%\"",
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                    {y: biciper, label: "BIKE"}, // % Bikes normals
+                    {y: bicielper, label: "BIKE-ELECTRIC"}, // % Bike electriques
+                ]
+            }]
+        });
+
+        chart.render();
+
+        }
