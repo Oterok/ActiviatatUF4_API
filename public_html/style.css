@@ -8,5 +8,8 @@ and open the template in the editor.
     Author     : doter
 */
 
-#mapid { height: 180px; }
 
+#map { 
+    height: 400px; 
+    width: 600px;
+}

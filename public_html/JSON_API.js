@@ -21,23 +21,23 @@ document.getElementById("executar").addEventListener("click", executarDades);
 window.setInterval(comprobarDades, frequenciaActualitzacio * 1000);
 
 function modificarTemps() {
-    tempsLabel.innerHTML = frequenciaActualitzacio;    
+    tempsLabel.innerHTML = frequenciaActualitzacio;
 }
 
 function aturarDades() {
-    if(!parat)
+    if (!parat)
         parat = true;
 }
 
 function executarDades() {
-    if(parat)
+    if (parat)
         parat = false;
 }
 
 //Si la variable parat o permet executem el codi per actualitzar les dades.
 function comprobarDades() {
     console.log(parat);
-    if(!parat){
+    if (!parat) {
         consultaDades();
     }
 }
@@ -85,30 +85,14 @@ function actualitzaDadesPantalla(data)
         linea = linea + "<br>Estació tipus:" + tipo + " hi ha <strong>" + arrayTipus[tipo] + "</strong> estacions amb <strong>" + arrayBicisPerTipus[tipo] + "</strong> bicis disponibles i <strong>" + arraySlots[tipo] + "</strong> slots lliures.";
     }
     //afegueixo contingut dins html
-    contingut.innerHTML=(linea + "</p>");
+    contingut.innerHTML = (linea + "</p>");
 }
 
 
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var map = L.map('map').setView([41.386855, 2.176666], 14);
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'your.mapbox.access.token'
-}).addTo(mymap);
+var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap<\/a> contributors'
+}).addTo(map);
 
-var marker = L.marker([51.5, -0.09]).addTo(mymap);
-
-//var circle = L.circle([51.508, -0.11], {
-//    color: 'red',
-//    fillColor: '#f03',
-//    fillOpacity: 0.5,
-//    radius: 500
-//}).addTo(mymap);
-//
-//var polygon = L.polygon([
-//    [51.509, -0.08],
-//    [51.503, -0.06],
-//    [51.51, -0.047]
-//]).addTo(mymap);
+var marker = L.marker([41.386855, 2.176666]).addTo(map);
