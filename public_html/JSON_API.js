@@ -9,6 +9,8 @@ var parat = false;
 var frequenciaActualitzacio = 3;
 var contingut = document.getElementById("contingut");
 var mapa = document.getElementById("mapid");
+var posBici =  new Array(2);
+var map = L.map('map').setView([41.4, 2.18], 12);
 
 //document
 var tempsLabel = document.getElementById("segons");
@@ -71,11 +73,15 @@ function actualitzaDadesPantalla(data)
     arrayBicisPerTipus = [];
     arraySlots = [];
 
+
     var linea = "<p>Nova actualització <strong>" + lastUpdateTime + "</strong>";
 
     //recorro array i vaig posant ja dades
     for (i = 0; i < data.stations.length; i++)
     {
+        posBici[i] = new Array(2);
+        posBici[i][0] = data.stations[i].latitude;
+        posBici[i][1] = data.stations[i].longitude;
         isNaN(arrayTipus[data.stations[i].type]) ? arrayTipus[data.stations[i].type] = 0 : arrayTipus[data.stations[i].type]++;
         isNaN(arrayBicisPerTipus[data.stations[i].type]) ? arrayBicisPerTipus[data.stations[i].type] = parseInt(data.stations[i].bikes) : arrayBicisPerTipus[data.stations[i].type] += parseInt(data.stations[i].bikes);
         isNaN(arraySlots[data.stations[i].type]) ? arraySlots[data.stations[i].type] = parseInt(data.stations[i].slots) : arraySlots[data.stations[i].type] += parseInt(data.stations[i].slots);
@@ -86,13 +92,25 @@ function actualitzaDadesPantalla(data)
     }
     //afegueixo contingut dins html
     contingut.innerHTML = (linea + "</p>");
+
+    actualitzarMapa();
 }
 
 
-var map = L.map('map').setView([41.386855, 2.176666], 14);
 
-var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap<\/a> contributors'
-}).addTo(map);
 
-var marker = L.marker([41.386855, 2.176666]).addTo(map);
+
+function actualitzarMapa() {
+    
+
+    var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap<\/a> contributors'
+    }).addTo(map);
+    for (i = 0; i < posBici.length; i++)
+    {
+//        posBici[i][0] = data.stations[i].latitude;
+//        posBici[i][0] = data.stations[i].longitude;
+        var marker = L.marker([posBici[i][0], posBici[i][1]]).addTo(map);
+     }
+//    var marker = L.marker([41.386855, 2.176666]).addTo(map);
+}
